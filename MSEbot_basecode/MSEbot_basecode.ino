@@ -56,8 +56,6 @@ const int ciEncoderLeftB = 5;
 const int ciEncoderRightA = 14;
 const int ciEncoderRightB = 13;
 const int ciSmartLED = 25;
-const int ciStepperMotorDir = 21;
-const int ciStepperMotorStep = 22;
 const int usTrig = 25;
 const int usEcho = 23;
 
@@ -118,21 +116,11 @@ unsigned char ucMotorStateIndex = motorStartIndex;
 unsigned long CR1_ulHeartbeatTimerPrevious;
 unsigned long CR1_ulHeartbeatTimerNow;
 
-unsigned long stepCount = 0;                  // number of steps
-unsigned long stepRate = 2000;                       // step rate in microseconds
-unsigned long prevStepperMicrosec = 0;               // start time for delay cycle, in milliseconds
-unsigned long curStepperMicrosec = 0;                // current time, in milliseconds
-boolean btDir = true;                         // step direction
-boolean runStepper = false;
-
 boolean btHeartbeat = true;
 boolean btRun = false;
 boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
-boolean seekBeacon = false;
-boolean homeBeacon = false;
-boolean avoidBeacon = false;
-boolean firstPass = false;
+
 int iButtonState;
 int iLastButtonState = HIGH;
 
@@ -173,8 +161,6 @@ void setup() {
    pinMode(ciHeartbeatLED, OUTPUT);
    pinMode(ciPB1, INPUT_PULLUP);
    pinMode(ciLimitSwitch, INPUT_PULLUP);
-   pinMode(ciStepperMotorDir, OUTPUT);                     // Assign output for direction
-   pinMode(ciStepperMotorStep, OUTPUT);                    // Assign output for step
 
    pinMode(usTrig, OUTPUT);
    pinMode(usEcho, INPUT);
