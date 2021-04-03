@@ -1,8 +1,8 @@
 //functions specific for climber program
 
-int checkDistance(int trig, int echo){	//check distance read by ultrasonic sensor in cm
+uint8_t checkDistance(int trig, int echo){	//check distance read by ultrasonic sensor in cm
   long duration; // variable for the duration of sound wave travel
-  int distance; // variable for the distance measurement
+  uint8_t distance; // variable for the distance measurement
   
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);

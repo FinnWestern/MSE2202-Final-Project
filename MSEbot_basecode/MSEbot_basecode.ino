@@ -121,6 +121,11 @@ boolean btRun = false;
 boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
 
+uint8_t distance;
+boolean checkDistance = false;    //key to check distance
+unsigned long distanceCheckPeriod = 500;    //time in between distance checks
+unsigned long lastDistanceCheckTime = 0;
+
 int iButtonState;
 int iLastButtonState = HIGH;
 
@@ -227,6 +232,12 @@ void loop()
     if (millis() - CR1_ulLastByteTime > CR1_clReadTimeout) {
       CR1_ui8IRDatum = 0;                     // if so, clear incoming byte
     }
+ }
+
+ if(checkDistance){
+  if(millis() - lastDistanceCheckTime >= distanceCheckPeriod){
+    distance = checkDistance(usTrig, usEcho);
+  }
  }
  
  CR1_ulMainTimerNow = micros();
