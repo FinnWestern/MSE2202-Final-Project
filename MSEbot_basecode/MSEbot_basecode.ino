@@ -58,6 +58,8 @@ const int ciEncoderRightB = 13;
 const int ciSmartLED = 25;
 const int ciStepperMotorDir = 21;
 const int ciStepperMotorStep = 22;
+const int usTrig = 25;
+const int usEcho = 23;
 
 volatile uint32_t vui32test1;
 volatile uint32_t vui32test2;
@@ -173,6 +175,9 @@ void setup() {
    pinMode(ciLimitSwitch, INPUT_PULLUP);
    pinMode(ciStepperMotorDir, OUTPUT);                     // Assign output for direction
    pinMode(ciStepperMotorStep, OUTPUT);                    // Assign output for step
+
+   pinMode(usTrig, OUTPUT);
+   pinMode(usEcho, INPUT);
 
    SmartLEDs.begin();                          // Initialize Smart LEDs object (required)
    SmartLEDs.clear();                          // Set all pixel colours to off
