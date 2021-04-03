@@ -420,33 +420,6 @@ void loop()
           CR1_ulMotorTimerPrevious = millis();
        }
 
-      if(seekBeacon){
-        if(CR1_ui8IRDatum == 0x55){ 
-          ENC_stopMotors();     
-          seekBeacon = false;
-          move(0);
-          ucMotorState = 0;
-          ucMotorStateIndex++;
-        }else if(firstPass){
-          CR1_ui8WheelSpeed = 150;
-        }else{
-          CR1_ui8WheelSpeed = 130;
-        }
-      }
-
-      if(homeBeacon){
-        if(CR1_ui8IRDatum == 0x41){
-          ENC_stopMotors();
-          homeBeacon = false;
-          move(0);
-          ucMotorState = 0;
-          ucMotorStateIndex++;
-        }else{
-          adjustSpeed = true;
-          CR1_ui8WheelSpeed = 140;
-        }
-      }
-       
       //adjust speed to remain straight
       if(adjustSpeed){
         bias = ENC_SpeedBias();
