@@ -72,6 +72,7 @@ volatile uint32_t vui32test2;
 #include "MyWEBserver.h"
 #include "BreakPoint.h"
 #include "WDT.h";
+#include "Ultrasonic.h"
 
 #define motorStartIndex 0      //choose which step to start on
 
@@ -122,8 +123,8 @@ boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
 
 uint8_t distance;
-boolean checkDistance = false;    //key to check distance
-unsigned long distanceCheckPeriod = 500;    //time in between distance checks
+boolean checkDistance = true;    //key to check distance
+unsigned long distanceCheckPeriod = 100;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
 int iButtonState;
@@ -203,7 +204,6 @@ void loop()
        {
           ucMotorStateIndex = motorStartIndex; 
           ucMotorState = 0;
-          stepCount = 0;
           move(0);
        }
       
@@ -217,7 +217,6 @@ void loop()
   btRun = 0; //if limit switch is pressed stop bot
   ucMotorStateIndex = motorStartIndex;
   ucMotorState = 0;
-  stepCount = 0;
   move(0);
  }
  
@@ -236,7 +235,9 @@ void loop()
 
  if(checkDistance){
   if(millis() - lastDistanceCheckTime >= distanceCheckPeriod){
-    distance = checkDistance(usTrig, usEcho);
+    lastDistanceCheckTime = millis();
+    distance = getDistance(usTrig, usEcho);
+    Serial.println(distance);
   }
  }
  
