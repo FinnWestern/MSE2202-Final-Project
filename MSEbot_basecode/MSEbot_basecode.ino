@@ -282,7 +282,7 @@ void loop()
           {
             move(0);
             adjustSpeed = true;
-            ENC_SetDistance(290, 290);
+            ENC_SetDistance(170, 170);
             ucMotorState = 1;   //forward
             ucMotorStateIndex++;
                      
@@ -308,8 +308,8 @@ void loop()
            case 3:
           {
             move(0);
-            ENC_SetDistance(ci8RightTurn,-(ci8RightTurn));
-            ucMotorState = 3;  //right
+            ENC_SetDistance(-(ci8LeftTurn), ci8LeftTurn);
+            ucMotorState = 2;  //left
             ucMotorStateIndex++;
             
             break;
@@ -325,90 +325,61 @@ void loop()
           case 5:
           {
             move(0);
-            ENC_SetDistance(ci8RightTurn,-(ci8RightTurn));
-            ucMotorState = 3;  //right
-            ucMotorStateIndex++;
-            
+                        
             break;
           }
            case 6:
           {
             move(0);
-            ENC_SetDistance(340, 340);
-            ucMotorState = 1;   //forward
-            ucMotorStateIndex++;
-                       
+                                   
             break;
           }
           case 7:
           {
             move(0);
-            ENC_runMotors();
-            seekBeacon = true;
-            firstPass = true;
-            ucMotorState = 3;   //right until sees beacon
-            
+                        
             break;
           }
           case 8:
           {
             move(0);
-            ENC_runMotors();
-            seekBeacon = true;
-            firstPass = false;
-            ucMotorState = 2;   //left to seek beacon again
-
+            
             break;
           }
           case 9:
           {
             move(0);
-            ENC_SetDistance(-8, 8);
-            ucMotorState = 2;   //left
-            ucMotorStateIndex++;
-            
+                        
             break;
           }
           case 10:
           {
             move(0);
-            ENC_runMotors();
-            homeBeacon = true;
-            ucMotorState = 1;     //forward
-            
+                        
             break;
           }
            case 11:
           {
             move(0);
-            ENC_SetDistance(-150, -150);
-            ucMotorState = 4;   //reverse
-            ucMotorStateIndex++;
-            
+                        
             break;
           }
           case 12:
           {
             move(0);
-            ENC_SetDistance(-(ci8LeftTurn*2), ci8LeftTurn);
-            ucMotorState = 2;   //left
-            ucMotorStateIndex++;
-            
+                        
             break;
           }
           case 13:
           {
-            ucMotorState = 0;
-            runStepper = true;
-            ucMotorStateIndex++;
+            move(0);
 
             break;
           }
           case 14:
           {
             move(0);
-            ucMotorState = 0;
-
+            
             break;
           }
          }
