@@ -228,24 +228,6 @@ void loop()
       CR1_ui8IRDatum = 0;                     // if so, clear incoming byte
     }
  }
-
- if(runStepper){
-  curStepperMicrosec = micros();                      // get the current time in milliseconds
-  if (curStepperMicrosec - prevStepperMicrosec > stepRate) { // check to see if elapsed time matched the desired delay
-     Serial.println(stepCount);
-     if (stepCount%5000 == 0) {
-       btDir = !btDir;
-       digitalWrite(ciStepperMotorDir, btDir);           // set direction
-     }
-    prevStepperMicrosec = curStepperMicrosec;           
-    stepCount++;     
-    digitalWrite(ciStepperMotorStep, stepCount & 1);      // toggle step pin (0 if stepCount is even, 1 if stepCount is odd)
-    if(stepCount >= 10000){
-      Serial.println("here");
-      runStepper = false;
-    }
-  }
- }
  
  CR1_ulMainTimerNow = micros();
  if(CR1_ulMainTimerNow - CR1_ulMainTimerPrevious >= CR1_ciMainTimer)
