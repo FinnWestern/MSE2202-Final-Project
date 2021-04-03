@@ -1,0 +1,13 @@
+Tested robot ascending
+
+Trail 1: 
+	Number of stepper resets: 5
+	Time to climb to 50cm: 3:15 mins
+	Notes: robot can climb well, having issues with motor power
+Trail 2:
+	Resets: 1
+	Time: 2:30 mins
+	Notes: increased current limit to 0.1V on adjustment pin (from 0.08V)
+
+Next steps:
+	Test DC motor from 2201 lab kit

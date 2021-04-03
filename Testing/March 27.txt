@@ -1,0 +1,13 @@
+Tested robot ascending with dc motor
+
+Trail 1: 
+	Number of resets: 0
+	Time to climb to 50cm: 15.3 seconds
+Trail 2:
+	Resets: 0
+	Time: 14.8 seconds
+	Notes: No rope push needed for winch to grab. 
+	Some audible strain when climbing but nothing major
+
+Next steps:
+	Attach dc motor to driver board for direction control.
