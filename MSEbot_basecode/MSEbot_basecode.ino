@@ -41,7 +41,6 @@
 
 
 //Pin assignments
-const int ciHeartbeatLED = 2;
 const int ciPB1 = 27;     
 const int ciPB2 = 26;      
 const int ciPot1 = A4;    //GPIO 32  - when JP2 has jumper installed Analog pin AD4 is connected to Poteniometer R1
@@ -77,7 +76,6 @@ volatile uint32_t vui32test2;
 void loopWEBServerButtonresponce(void);
 
 const int CR1_ciMainTimer =  1000;
-const int CR1_ciHeartbeatInterval = 500;
 const int CR1_ciMotorRunTime = 1000;
 const int CR1_ciMotorPauseTime = 1000;
 const long CR1_clDebounceDelay = 50;
@@ -112,10 +110,6 @@ unsigned long CR1_ulMotorTimerPrevious;
 unsigned long CR1_ulMotorTimerNow;
 unsigned char ucMotorStateIndex = motorStartIndex;
 
-unsigned long CR1_ulHeartbeatTimerPrevious;
-unsigned long CR1_ulHeartbeatTimerNow;
-
-boolean btHeartbeat = true;
 boolean btRun = false;
 boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
@@ -163,7 +157,6 @@ void setup() {
    setupMotion();
    setupUltrasonic();
    attachInterrupt(echoPin, finishPulse, FALLING);
-   pinMode(ciHeartbeatLED, OUTPUT);
    pinMode(ciPB1, INPUT_PULLUP);
    pinMode(ciLimitSwitch, INPUT_PULLUP);
 
@@ -505,16 +498,6 @@ void loop()
     }
 
   }
- }
-
- // Heartbeat LED
- CR1_ulHeartbeatTimerNow = millis();
- if(CR1_ulHeartbeatTimerNow - CR1_ulHeartbeatTimerPrevious >= CR1_ciHeartbeatInterval)
- {
-    CR1_ulHeartbeatTimerPrevious = CR1_ulHeartbeatTimerNow;
-    btHeartbeat = !btHeartbeat;
-    digitalWrite(ciHeartbeatLED, btHeartbeat);
-   // Serial.println((vui32test2 - vui32test1)* 3 );
  }
 
 }
