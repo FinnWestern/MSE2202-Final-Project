@@ -46,5 +46,5 @@ void finishPulse(){
 }
 
 //Have to subtract the time it takes for the 8, 40kHz pulses to be sent (takes 8.24cm)
-//Sensor accurate within 0.5cm
+//Sensor accurate within 0.42cm
 
