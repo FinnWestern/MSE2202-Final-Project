@@ -56,8 +56,6 @@ const int ciEncoderLeftB = 5;
 const int ciEncoderRightA = 14;
 const int ciEncoderRightB = 13;
 const int ciSmartLED = 25;
-const int usTrig = 25;
-const int usEcho = 23;
 
 volatile uint32_t vui32test1;
 volatile uint32_t vui32test2;
@@ -122,9 +120,8 @@ boolean btRun = false;
 boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
 
-uint8_t distance;
 boolean checkDistance = true;    //key to check distance
-unsigned long distanceCheckPeriod = 100;    //time in between distance checks
+unsigned long distanceCheckTime = 100;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
 int iButtonState;
@@ -164,12 +161,11 @@ void setup() {
    WDT_ResetCore1(); 
 
    setupMotion();
+   setupUltrasonic();
+   attachInterrupt(echoPin, finishPulse, FALLING);
    pinMode(ciHeartbeatLED, OUTPUT);
    pinMode(ciPB1, INPUT_PULLUP);
    pinMode(ciLimitSwitch, INPUT_PULLUP);
-
-   pinMode(usTrig, OUTPUT);
-   pinMode(usEcho, INPUT);
 
    SmartLEDs.begin();                          // Initialize Smart LEDs object (required)
    SmartLEDs.clear();                          // Set all pixel colours to off
@@ -234,10 +230,16 @@ void loop()
  }
 
  if(checkDistance){
-  if(millis() - lastDistanceCheckTime >= distanceCheckPeriod){
+  if(us_Received){
+    us_Received = false;
+    // Displays the distance on the Serial Monitor
+    Serial.print("Distance: ");
+    Serial.print(us_Distance);
+    Serial.println(" cm");
+  }
+  if(millis() - lastDistanceCheckTime >= distanceCheckTime){
     lastDistanceCheckTime = millis();
-    distance = getDistance(usTrig, usEcho);
-    Serial.println(distance);
+    getDistance();
   }
  }
  

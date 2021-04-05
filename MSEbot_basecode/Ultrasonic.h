@@ -1,21 +1,32 @@
-//functions specific for climber program
+#define echoPin 15 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin 23 //attach pin D3 Arduino to pin Trig of HC-SR04
 
-uint8_t getDistance(int trig, int echo){	//check distance read by ultrasonic sensor in cm
-  long duration; // variable for the duration of sound wave travel
-  uint8_t distance; // variable for the distance measurement
-  
-  digitalWrite(trig, LOW);
-  delayMicroseconds(2);
-  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
-  digitalWrite(trig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trig, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echo, HIGH);
-  // Calculating the distance
-  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+// defines variables
+long us_Duration; // variable for the duration of sound wave travel in microseconds
+unsigned long us_SendTime;
+boolean us_Received = false;
+double us_Distance; // variable for the distance measurement
 
-  return distance;    //distance in cm
+void finishPulse(){
+  us_Duration = micros() - us_SendTime;
+  us_Received = true;
+  us_Distance = ((double)us_Duration / 29 / 2) - 8.24; // Speed of sound wave divided by 2 (go and back)
 }
 
-//may need to put interrupts in here and put winch functions in motion.h
+void setupUltrasonic() {
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+}
+
+void getDistance() {
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+    us_SendTime = micros();
+}
+
+//Have to subtract the time it takes for the 8, 40kHz pulses to be sent (takes 8.24cm)
+//Sensor accurate within 0.42cm
+
