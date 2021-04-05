@@ -70,6 +70,7 @@ volatile uint32_t vui32test2;
 #include "BreakPoint.h"
 #include "WDT.h";
 #include "Ultrasonic.h"
+#include "Servo.h"
 
 #define motorStartIndex 0      //choose which step to start on
 
@@ -156,6 +157,7 @@ void setup() {
 
    setupMotion();
    setupUltrasonic();
+   setupServo();
    attachInterrupt(echoPin, finishPulse, FALLING);
    pinMode(ciPB1, INPUT_PULLUP);
    pinMode(ciLimitSwitch, INPUT_PULLUP);
@@ -233,6 +235,7 @@ void loop()
   if(millis() - lastDistanceCheckTime >= distanceCheckTime){
     lastDistanceCheckTime = millis();
     getDistance();
+    setServo(90);
   }
  }
  
