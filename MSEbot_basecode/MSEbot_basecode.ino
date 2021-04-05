@@ -121,7 +121,7 @@ boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
 
 boolean checkDistance = true;    //key to check distance
-unsigned long distanceCheckTime = 100;    //time in between distance checks
+unsigned long distanceCheckTime = 500;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
 int iButtonState;
