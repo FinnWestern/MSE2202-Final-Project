@@ -17,7 +17,7 @@
   8             GPIO5                             D5 (has connections in both 5V and 3V areas)                                         Left Encoder, Channel B
   9             GPIO18                            D18 (has connections in both 5V and 3V areas)                                        Left Motor, Channel B
   10            GPIO19/CTS0                       D19 (has connections in both 5V and 3V areas)                                        Right Motor, Channel A
-  11            GPIO21                            D21/I2C_DA  
+  11            GPIO21                            D21/I2C_SDA  
   12            GPIO3/RX0                         RX0
   13            GPIO1//TX0                        TX0
   14            GPIO22/RTS1                       D22/I2C_CLK
@@ -42,9 +42,9 @@
 
 //Pin assignments
 const int ciPB1 = 27;     
-const int ciPB2 = 26;      
 const int ciPot1 = A4;    //GPIO 32  - when JP2 has jumper installed Analog pin AD4 is connected to Poteniometer R1
-const int ciLimitSwitch = 26;
+const int rightSwitch = 26;
+const int leftSwitch = 25;
 const int ciIRDetector = 16;
 const int ciMotorLeftA = 4;
 const int ciMotorLeftB = 18;
@@ -54,7 +54,7 @@ const int ciEncoderLeftA = 17;
 const int ciEncoderLeftB = 5;
 const int ciEncoderRightA = 14;
 const int ciEncoderRightB = 13;
-const int ciSmartLED = 25;
+//const int ciSmartLED = 25;
 
 volatile uint32_t vui32test1;
 volatile uint32_t vui32test2;
@@ -160,11 +160,12 @@ void setup() {
    setupServo();
    attachInterrupt(echoPin, finishPulse, FALLING);
    pinMode(ciPB1, INPUT_PULLUP);
-   pinMode(ciLimitSwitch, INPUT_PULLUP);
-
+   pinMode(rightSwitch, INPUT_PULLUP);
+/*
    SmartLEDs.begin();                          // Initialize Smart LEDs object (required)
    SmartLEDs.clear();                          // Set all pixel colours to off
    SmartLEDs.show();                           // Send the updated pixel colours to the hardware
+*/
 }
 
 void loop()
@@ -202,15 +203,15 @@ void loop()
    }
  }
  iLastButtonState = iButtonValue;             // store button state
-
- if(!digitalRead(ciLimitSwitch))
+/*
+ if(!digitalRead(rightSwitch))
  {
   btRun = 0; //if limit switch is pressed stop bot
   ucMotorStateIndex = motorStartIndex;
   ucMotorState = 0;
   move(0);
  }
- 
+ */
  if (Serial2.available() > 0) {               // check for incoming data
     CR1_ui8IRDatum = Serial2.read();          // read the incoming byte
 // Serial.println(iIncomingByte, HEX);        // uncomment to output received character
@@ -235,7 +236,6 @@ void loop()
   if(millis() - lastDistanceCheckTime >= distanceCheckTime){
     lastDistanceCheckTime = millis();
     getDistance();
-    setServo(90);
   }
  }
  
@@ -267,6 +267,7 @@ void loop()
             adjustSpeed = true;
             ENC_SetDistance(170, 170);
             ucMotorState = 1;   //forward
+            setServo(90);
             ucMotorStateIndex++;
                      
             break;
@@ -470,7 +471,7 @@ void loop()
     }
     //###############################################################################
     case 7: 
-    {
+    {/*
        if (CR1_ui8IRDatum == 0x55) {                // if proper character is seen
          SmartLEDs.setPixelColor(0,0,25,0);         // make LED1 green with 10% intensity
        }
@@ -481,7 +482,7 @@ void loop()
          SmartLEDs.setPixelColor(0,25,0,0);         // make LED1 red with 10% intensity
        }
        SmartLEDs.show();                            // send updated colour to LEDs
-          
+          */
       CR1_ucMainTimerCaseCore1 = 8;
       break;
     }
