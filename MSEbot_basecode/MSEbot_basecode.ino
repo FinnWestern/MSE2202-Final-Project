@@ -84,7 +84,7 @@ const long CR1_clDebounceDelay = 50;
 const long CR1_clReadTimeout = 220;
 
 const uint8_t ci8RightTurn = 23;
-const uint8_t ci8LeftTurn = 25;
+const uint8_t ci8LeftTurn = 26;
 
 unsigned char CR1_ucMainTimerCaseCore1;
 uint8_t CR1_ui8LimitSwitch;
@@ -335,7 +335,7 @@ void loop()
                   case 5:
                     {
                       move(0);
-                      ENC_SetDistance(4*ropeDistance, 4*ropeDistance);
+                      ENC_SetDistance(3*ropeDistance, 3*ropeDistance);
                       checkDistance = false;
                       ucMotorState = 1;   //forward
                       ucMotorStateIndex++;
@@ -519,7 +519,7 @@ void loop()
       //###############################################################################
       case 4:
         {
-          moveWinch(winchState, 180);
+          moveWinch(winchState, 230);
           CR1_ucMainTimerCaseCore1 = 5;
           break;
         }
