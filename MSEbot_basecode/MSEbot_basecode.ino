@@ -131,6 +131,10 @@ unsigned long lastDistanceCheckTime = 0;
 unsigned long servoTime = 3000;
 unsigned long startServoTime = 0;
 
+boolean wiggle = false;
+boolean reachedWiggle = false;
+unsigned long noLatchTime = 2000;
+unsigned long winchStartTime = 0;
 
 int iButtonState;
 int iLastButtonState = HIGH;
@@ -372,6 +376,8 @@ void loop()
                       winchState = 1;
                       ucMotorState = 0;
                       ENC_runMotors();
+                      wiggle = true;
+                      winchStartTime = millis();
 
                       break;
                     }
@@ -379,6 +385,7 @@ void loop()
                     {
                       move(0);    
                       checkAscent = true;
+                      wiggle = false;
                       setServo(180);
                       startServoTime = millis();
                       winchState = 1;
@@ -402,6 +409,15 @@ void loop()
               }
             } else {
               CR1_ulMotorTimerPrevious = millis();
+            }
+
+            if(wiggle){
+              CR1_ui8WheelSpeed = 140;
+              if(millis() - winchStartTime >= noLatchTime && !reachedWiggle){
+                reachedWiggle = true;
+                ENC_SetDistance(20, 20);
+                ucMotorState = 4;
+              }
             }
 
             if(checkAscent){
