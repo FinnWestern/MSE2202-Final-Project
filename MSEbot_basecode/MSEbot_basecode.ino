@@ -308,7 +308,7 @@ void loop()
                   case 3:
                     {
                       move(0);
-                      ENC_SetDistance(6*ropeDistance, 6*ropeDistance);
+                      ENC_SetDistance(50, 50);
                       ucMotorState = 1;  //forward
                       ucMotorStateIndex++;
                       break;
@@ -327,7 +327,7 @@ void loop()
                   case 5:
                     {
                       move(0);
-                      ENC_SetDistance(50, 50);
+                      ENC_SetDistance(4*ropeDistance, 4*ropeDistance);
                       checkDistance = false;
                       ucMotorState = 1;   //forward
                       ucMotorStateIndex++;
@@ -395,7 +395,6 @@ void loop()
             }
 
             if (doorCheck) {
-              CR1_ui8WheelSpeed = 180;
               if (us_Distance < 15) {
                 whiskerCheck = true;    //go to check with whiskers
                 doorCheck = false;
@@ -403,7 +402,6 @@ void loop()
             }
             
             if (whiskerCheck) {
-              CR1_ui8WheelSpeed = 160;
               if (!digitalRead(rightSwitch) && !digitalRead(leftSwitch)) {
                 move(0);
                 ucMotorState = 0;
