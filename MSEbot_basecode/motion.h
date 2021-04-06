@@ -25,6 +25,7 @@ uint8_t ui8LeftWorkingSpeed = cui8StartingSpeed;
 uint8_t ui8RightWorkingSpeed = cui8StartingSpeed;
 
 unsigned char ucMotorState = 5;
+unsigned char winchState = 0;
 
 double dManualSpeed;
 double dForwardSpeed;

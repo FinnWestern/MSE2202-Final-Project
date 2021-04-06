@@ -72,7 +72,7 @@ volatile uint32_t vui32test2;
 #include "Ultrasonic.h"
 #include "Servo.h"
 
-#define motorStartIndex 4      //choose which step to start on
+#define motorStartIndex 0      //choose which step to start on
 #define ropeDistance 19.5      //distance from box to rope in cm
 
 void loopWEBServerButtonresponce(void);
@@ -84,7 +84,7 @@ const long CR1_clDebounceDelay = 50;
 const long CR1_clReadTimeout = 220;
 
 const uint8_t ci8RightTurn = 23;
-const uint8_t ci8LeftTurn = 24;
+const uint8_t ci8LeftTurn = 25;
 
 unsigned char CR1_ucMainTimerCaseCore1;
 uint8_t CR1_ui8LimitSwitch;
@@ -117,9 +117,11 @@ boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
 boolean doorCheck = false;      //key to checking distance from door with ultrasonic
 boolean whiskerCheck = false;   //key to checking when robot makes contact with door with whisker switches
+boolean checkRopeCatch = false;
+boolean boxEdge = false;
 
-boolean checkDistance = true;    //key to check distance
-unsigned long distanceCheckTime = 500;    //time in between distance checks
+boolean checkDistance = false;    //key to check distance
+unsigned long distanceCheckTime = 100;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
 double ropeCheckDistance = ropeDistance - 8;
@@ -200,6 +202,7 @@ void loop()
         // if stopping, reset motor states and stop motors
         if (!btRun)
         {
+          setServo(90);
           ENC_stopMotors();
           ucMotorStateIndex = motorStartIndex;
           ucMotorState = 0;
@@ -239,6 +242,16 @@ void loop()
     }
   }
 
+  if(boxEdge){    //in main loop for better sensitivity
+    if(us_Distance > 20){
+      boxEdge = false;
+      ENC_stopMotors();
+      move(0);
+      ucMotorState = 0;
+      ucMotorStateIndex++;
+    }
+  }
+
   CR1_ulMainTimerNow = micros();
   if (CR1_ulMainTimerNow - CR1_ulMainTimerPrevious >= CR1_ciMainTimer)
   {
@@ -263,80 +276,102 @@ void loop()
                 {
                   case 0:
                     {
+                      setServo(90);
                       move(0);
                       adjustSpeed = true;
-                      ENC_SetDistance(170, 170);
+                      checkDistance = true;
+                      us_Distance = 0;
+                      boxEdge = true;
                       ucMotorState = 1;   //forward
-                      setServo(90);
-                      ucMotorStateIndex++;
+                      ENC_runMotors();
 
                       break;
                     }
                   case 1:
                     {
                       move(0);
-                      ENC_SetDistance(-(ci8LeftTurn), ci8LeftTurn);
-                      ucMotorState = 2;  //left
-                      ucMotorStateIndex++;
-                      break;
-                    }
-                  case 2:
-                    {
-                      move(0);
-                      ENC_SetDistance(150, 150);
+                      checkDistance = false;
+                      ENC_SetDistance(40, 40);
                       ucMotorState = 1;   //forward
                       ucMotorStateIndex++;
 
                       break;
                     }
-                  case 3:
+                  case 2:
                     {
                       move(0);
                       ENC_SetDistance(-(ci8LeftTurn), ci8LeftTurn);
                       ucMotorState = 2;  //left
                       ucMotorStateIndex++;
-
+                      break;
+                    }
+                  case 3:
+                    {
+                      move(0);
+                      ENC_SetDistance(6*ropeDistance, 6*ropeDistance);
+                      ucMotorState = 1;  //forward
+                      ucMotorStateIndex++;
                       break;
                     }
                   case 4:
                     {
-                      adjustSpeed = true;
                       move(0);
-                      ENC_runMotors();
-                      setServo(0);
+                      boxEdge = true;
                       checkDistance = true;
-                      ucMotorState = 1;  //forward
-                      doorCheck = true;
+                      us_Distance = 0;
+                      ucMotorState = 1;   //forward
+                      ENC_runMotors();
 
                       break;
                     }
                   case 5:
                     {
                       move(0);
-                      setServo(180);
-                      ENC_SetDistance(-50, -50);
-                      ucMotorState = 4;   //forward
+                      ENC_SetDistance(50, 50);
+                      checkDistance = false;
+                      ucMotorState = 1;   //forward
                       ucMotorStateIndex++;
 
                       break;
                     }
                   case 6:
                     {
-                      ucMotorState = 0;
+                      move(0);
+                      ENC_SetDistance(-(ci8LeftTurn), ci8LeftTurn);
+                      ucMotorState = 2;  //left
+                      ucMotorStateIndex++;
+
+                      break;
+                    }
+                  case 7:
+                    {
+                      move(0);
+                      ENC_runMotors();
+                      setServo(0);
+                      checkDistance = true;
+                      ucMotorState = 1;  //forward
+                      doorCheck = true; 
+
+                      break;
+                    }
+                  case 8:
+                    {
                       move(0);    //rotate servo, start winch, square with door
+                      winchState = 1;
+                      //checkRopeCatch = true;
                       /*ENC_SetDistance(320, 320);
                       ucMotorState = 1;   //forward  11.5cm from rope to box
                       ucMotorStateIndex++;
 */
                       break;
                     }
-                  case 7:
+                  case 9:
                     {
                       move(0);    //stop once reached top
 
                       break;
                     }
-                  case 8:
+                  case 10:
                     {
                       move(0);    //back down
 
@@ -351,6 +386,14 @@ void loop()
               CR1_ulMotorTimerPrevious = millis();
             }
 
+            if(checkRopeCatch){   //move winch servo
+              if(us_Distance > 6){
+                checkRopeCatch = false;
+                
+                ucMotorStateIndex++;
+              }
+            }
+
             if (doorCheck) {
               CR1_ui8WheelSpeed = 180;
               if (us_Distance < 15) {
@@ -359,10 +402,11 @@ void loop()
               }
             }
             
-            if (whiskerCheck) {   //added in main loop for better sensitivity
+            if (whiskerCheck) {
               CR1_ui8WheelSpeed = 160;
               if (!digitalRead(rightSwitch) && !digitalRead(leftSwitch)) {
                 move(0);
+                ucMotorState = 0;
                 ENC_stopMotors();
                 ucMotorStateIndex++;
                 whiskerCheck = false;

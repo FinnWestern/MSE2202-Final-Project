@@ -5,7 +5,7 @@
 long us_Duration; // variable for the duration of sound wave travel in microseconds
 unsigned long us_SendTime;
 boolean us_Received = false;
-double us_Distance; // variable for the distance measurement
+double us_Distance = 0; // variable for the distance measurement
 
 void finishPulse(){
   us_Duration = micros() - us_SendTime;
