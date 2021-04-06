@@ -31,20 +31,23 @@ int iButtonState;                             // button state
 int iLastButtonState = HIGH;                  // 
 
 const int winchA = 2;
-const int winchB = 15;
+const int winchB = 23;
 int winchSpeed = 0;
+
+#define winch1Channel 7
+#define winch2Channel 8
 
 void setup() {
   
   //setup PWM for motors
-  ledcAttachPin(winchA, 1); // assign Motors pins to channels
-  ledcAttachPin(winchB, 2);
+  ledcAttachPin(winchA, winch1Channel); // assign Motors pins to channels
+  ledcAttachPin(winchB, winch2Channel);
 
   // Initialize channels 
   // channels 0-15, resolution 1-16 bits, freq limits depend on resolution
   // ledcSetup(uint8_t channel, uint32_t freq, uint8_t resolution_bits);
-  ledcSetup(1, 20000, 8); // 20mS PWM, 8-bit resolution
-  ledcSetup(2, 20000, 8);
+  ledcSetup(winch1Channel, 20000, 8); // 20mS PWM, 8-bit resolution
+  ledcSetup(winch2Channel, 20000, 8);
   winchSpeed = 0;
   
 #ifdef OUTPUT_ON
@@ -77,22 +80,13 @@ void loop() {
 
   if(btDir)
   {
-    ledcWrite(2,0);
-    ledcWrite(1,winchSpeed);
+    ledcWrite(winch1Channel,0);
+    ledcWrite(winch2Channel,winchSpeed);
     Serial.println("Forwards");
   }
   else
   {
-    ledcWrite(2,winchSpeed);
-    ledcWrite(1,0);
+    ledcWrite(winch1Channel,winchSpeed);
+    ledcWrite(winch2Channel,0);
   }
-
-#ifdef OUTPUT_ON
-    Serial.print("Dir: ");
-    Serial.print(btDir);
-    Serial.print(", rate: ");
-    Serial.print(stepRate);
-    Serial.print(", count: ");
-    Serial.println(stepCount);
-#endif
   }  

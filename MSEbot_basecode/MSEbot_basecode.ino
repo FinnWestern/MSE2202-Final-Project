@@ -72,7 +72,7 @@ volatile uint32_t vui32test2;
 #include "Ultrasonic.h"
 #include "Servo.h"
 
-#define motorStartIndex 0      //choose which step to start on
+#define motorStartIndex 8      //choose which step to start on
 #define ropeDistance 19.5      //distance from box to rope in cm
 
 void loopWEBServerButtonresponce(void);
@@ -112,6 +112,9 @@ unsigned long CR1_ulMotorTimerPrevious;
 unsigned long CR1_ulMotorTimerNow;
 unsigned char ucMotorStateIndex = motorStartIndex;
 
+uint8_t winchState = 0;
+//uint8_t winchSpeed = 150;
+
 boolean btRun = false;
 boolean btToggle = true;
 boolean adjustSpeed = false;    //key to if statement which averages speed to kep robot straight
@@ -119,12 +122,15 @@ boolean doorCheck = false;      //key to checking distance from door with ultras
 boolean whiskerCheck = false;   //key to checking when robot makes contact with door with whisker switches
 boolean checkRopeCatch = false;
 boolean boxEdge = false;
+boolean checkAscent = false;
 
 boolean checkDistance = false;    //key to check distance
 unsigned long distanceCheckTime = 100;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
-double ropeCheckDistance = ropeDistance - 8;
+unsigned long servoTime = 3000;
+unsigned long startServoTime = 0;
+
 
 int iButtonState;
 int iLastButtonState = HIGH;
@@ -202,10 +208,11 @@ void loop()
         // if stopping, reset motor states and stop motors
         if (!btRun)
         {
-          setServo(90);
+          setServo(0);
           ENC_stopMotors();
           ucMotorStateIndex = motorStartIndex;
           ucMotorState = 0;
+          winchState = 0;
           move(0);
         }
 
@@ -239,6 +246,7 @@ void loop()
     if (millis() - lastDistanceCheckTime >= distanceCheckTime) {
       lastDistanceCheckTime = millis();
       getDistance();
+      Serial.println(us_Distance);
     }
   }
 
@@ -346,10 +354,10 @@ void loop()
                   case 7:
                     {
                       move(0);
-                      ENC_runMotors();
                       setServo(0);
                       checkDistance = true;
                       ucMotorState = 1;  //forward
+                      ENC_runMotors();
                       doorCheck = true; 
 
                       break;
@@ -357,23 +365,33 @@ void loop()
                   case 8:
                     {
                       move(0);    //rotate servo, start winch, square with door
+                      setServo(0);
+                      us_Distance = 0;
+                      checkDistance = true;
+                      checkRopeCatch = true;
                       winchState = 1;
-                      //checkRopeCatch = true;
-                      /*ENC_SetDistance(320, 320);
-                      ucMotorState = 1;   //forward  11.5cm from rope to box
-                      ucMotorStateIndex++;
-*/
+                      ucMotorState = 0;
+                      ENC_runMotors();
+
                       break;
                     }
                   case 9:
                     {
-                      move(0);    //stop once reached top
-
+                      move(0);    
+                      checkAscent = true;
+                      setServo(180);
+                      startServoTime = millis();
+                      winchState = 1;
+                      ENC_runMotors();
+                      ucMotorState = 0;
                       break;
                     }
                   case 10:
                     {
-                      move(0);    //back down
+                      move(0);   
+                      ucMotorState = 0;
+                      winchState = 0;
+                      checkDistance = false;
 
                       break;
                     }
@@ -386,10 +404,18 @@ void loop()
               CR1_ulMotorTimerPrevious = millis();
             }
 
+            if(checkAscent){
+              if(us_Distance > 60 && (millis() - startServoTime) >= servoTime){
+                checkAscent = false;
+                ENC_stopMotors();
+                ucMotorStateIndex++;
+              }
+            }
+
             if(checkRopeCatch){   //move winch servo
-              if(us_Distance > 6){
+              if(us_Distance > 20){
                 checkRopeCatch = false;
-                
+                ENC_stopMotors();
                 ucMotorStateIndex++;
               }
             }
@@ -463,6 +489,7 @@ void loop()
         {
           //read pot 1 for motor speeds
           CR1_ui8WheelSpeed = map(analogRead(ciPot1), 0, 4096, 130, 255);  // adjust to range that will produce motion
+          
 
           CR1_ucMainTimerCaseCore1 = 2;
           break;
@@ -492,7 +519,7 @@ void loop()
       //###############################################################################
       case 4:
         {
-
+          moveWinch(winchState, 180);
           CR1_ucMainTimerCaseCore1 = 5;
           break;
         }

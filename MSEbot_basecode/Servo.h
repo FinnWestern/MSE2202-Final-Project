@@ -1,6 +1,6 @@
 //#define OUTPUT_ON                          // uncomment to turn on output debugging information
 
-#define servoPin 2                    // select the digital pin used for RC servo motor
+#define servoPin 15                    // select the digital pin used for RC servo motor
 #define servoChannel 6                // select the channel used for the RC servo motor
 
 const long minDutyCycle = 1375;            // duty cycle for 0 degrees

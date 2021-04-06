@@ -25,13 +25,18 @@ uint8_t ui8LeftWorkingSpeed = cui8StartingSpeed;
 uint8_t ui8RightWorkingSpeed = cui8StartingSpeed;
 
 unsigned char ucMotorState = 5;
-unsigned char winchState = 0;
 
 double dManualSpeed;
 double dForwardSpeed;
 double dReverseSpeed;
 double dLeftSpeed;
 double dRightSpeed;
+
+const int winchA = 2;
+const int winchB = 23;
+
+#define winch1Channel 7
+#define winch2Channel 8
 
 void setupMotion (void)
 {
@@ -58,6 +63,11 @@ void setupMotion (void)
  	
    ucMotion_Direction = 0;
    ucMotion_Speed = 0;
+
+  ledcAttachPin(winchA, winch1Channel); // assign Motors pins to channels
+  ledcAttachPin(winchB, winch2Channel);
+  ledcSetup(winch1Channel, 20000, 8); // 20mS PWM, 8-bit resolution
+  ledcSetup(winch2Channel, 20000, 8);
 }
 
 
@@ -67,6 +77,32 @@ void ResetSpeeds()
   ui8RightWorkingSpeed = cui8StartingSpeed;
 
   
+}
+
+void moveWinch(uint8_t winchDirection, uint8_t winchSpeed){
+  switch(winchDirection){
+    //off
+    case 0:
+    {
+      ledcWrite(winch1Channel, 0);
+      ledcWrite(winch2Channel, 0);
+      break;
+    }
+    //forwards
+    case 1:
+    {
+      ledcWrite(winch1Channel, 0);
+      ledcWrite(winch2Channel, winchSpeed);
+      break;
+    }
+    //reverse
+    case 2:
+    {
+      ledcWrite(winch1Channel, winchSpeed);
+      ledcWrite(winch2Channel, 0);
+      break;
+    }
+  }
 }
 
 void MoveTo(uint8_t ui8Direction, uint8_t ui8LeftSpeed, uint8_t ui8RightSpeed)
