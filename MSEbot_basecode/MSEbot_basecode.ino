@@ -72,7 +72,7 @@ volatile uint32_t vui32test2;
 #include "Ultrasonic.h"
 #include "Servo.h"
 
-#define motorStartIndex 8      //choose which step to start on
+#define motorStartIndex 0      //choose which step to start on
 #define ropeDistance 19.5      //distance from box to rope in cm
 
 void loopWEBServerButtonresponce(void);
@@ -208,7 +208,7 @@ void loop()
         // if stopping, reset motor states and stop motors
         if (!btRun)
         {
-          setServo(0);
+          setServo(90);
           ENC_stopMotors();
           ucMotorStateIndex = motorStartIndex;
           ucMotorState = 0;
