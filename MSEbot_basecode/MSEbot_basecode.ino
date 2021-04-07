@@ -128,7 +128,7 @@ boolean checkDistance = false;    //key to check distance
 unsigned long distanceCheckTime = 100;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
-unsigned long servoTime = 3000;
+unsigned long servoTime = 6000;
 unsigned long startServoTime = 0;
 
 boolean wiggle = false;
@@ -391,6 +391,7 @@ void loop()
                       winchState = 1;
                       ENC_runMotors();
                       ucMotorState = 0;
+                      
                       break;
                     }
                   case 10:
@@ -412,11 +413,12 @@ void loop()
             }
 
             if(wiggle){
-              CR1_ui8WheelSpeed = 140;
-              if(millis() - winchStartTime >= noLatchTime && !reachedWiggle){
-                reachedWiggle = true;
-                ENC_SetDistance(20, 20);
-                ucMotorState = 4;
+              if(millis() - winchStartTime >= noLatchTime){
+                if(us_Distance < 20){
+                  wiggle = false;
+                  CR1_ui8WheelSpeed = 140;
+                  ucMotorState = 4;
+                }                
               }
             }
 
