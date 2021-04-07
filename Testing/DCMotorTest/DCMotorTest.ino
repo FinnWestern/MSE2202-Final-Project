@@ -18,7 +18,7 @@
 
 */
 
-//#define OUTPUT_ON                           // uncomment to turn on output debugging information
+#define OUTPUT_ON                           // uncomment to turn on output debugging information
 
 const int potPin = 32;                        // select the analog pin used for the potentiometer (R1)
 const int buttonPin = 27;                     // select digital pin for built-in pushbutton PB1 (JP13 required)

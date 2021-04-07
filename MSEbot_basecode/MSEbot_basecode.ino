@@ -113,7 +113,7 @@ unsigned long CR1_ulMotorTimerNow;
 unsigned char ucMotorStateIndex = motorStartIndex;
 
 uint8_t winchState = 0;
-//uint8_t winchSpeed = 150;
+uint8_t winchSpeed = 230;
 
 boolean btRun = false;
 boolean btToggle = true;
@@ -123,18 +123,21 @@ boolean whiskerCheck = false;   //key to checking when robot makes contact with 
 boolean checkRopeCatch = false;
 boolean boxEdge = false;
 boolean checkAscent = false;
+boolean checkDescent = false;
 
 boolean checkDistance = false;    //key to check distance
 unsigned long distanceCheckTime = 100;    //time in between distance checks
 unsigned long lastDistanceCheckTime = 0;
 
-unsigned long servoTime = 6000;
+unsigned long servoTime = 3000;
 unsigned long startServoTime = 0;
 
 boolean wiggle = false;
 boolean reachedWiggle = false;
-unsigned long noLatchTime = 2000;
+unsigned long noLatchTime = 6000;
 unsigned long winchStartTime = 0;
+unsigned long hangTime = 3000;
+unsigned long startHang = 0;
 
 int iButtonState;
 int iLastButtonState = HIGH;
@@ -396,6 +399,19 @@ void loop()
                     }
                   case 10:
                     {
+                      move(0);  
+                      checkDistance = true; 
+                      setServo(180);
+                      ucMotorState = 0;
+                      winchState = 0;
+                      ENC_runMotors();
+                      checkDescent = true;
+                      startHang = millis();
+
+                      break;
+                    }
+                  case 11:
+                    {
                       move(0);   
                       ucMotorState = 0;
                       winchState = 0;
@@ -412,13 +428,28 @@ void loop()
               CR1_ulMotorTimerPrevious = millis();
             }
 
+            if(checkDescent){
+              if(millis() - startHang >= hangTime){
+                winchState = 2;
+                if(us_Distance < 20){
+                  checkDescent = false;
+                  winchState = 0;
+                  ucMotorStateIndex++;
+                  ENC_stopMotors();
+                }
+              }
+            }
+
             if(wiggle){
               if(millis() - winchStartTime >= noLatchTime){
                 if(us_Distance < 20){
-                  wiggle = false;
-                  CR1_ui8WheelSpeed = 140;
+                  CR1_ui8WheelSpeed = 130;
                   ucMotorState = 4;
-                }                
+                }else{
+                  wiggle = false;
+                  move(0);
+                  ucMotorState = 0;           
+                }
               }
             }
 
@@ -431,10 +462,11 @@ void loop()
             }
 
             if(checkRopeCatch){   //move winch servo
-              if(us_Distance > 20){
+              if(us_Distance > 50){
                 checkRopeCatch = false;
                 ENC_stopMotors();
                 ucMotorStateIndex++;
+                wiggle = false;
               }
             }
 
@@ -537,7 +569,7 @@ void loop()
       //###############################################################################
       case 4:
         {
-          moveWinch(winchState, 230);
+          moveWinch(winchState, winchSpeed);
           CR1_ucMainTimerCaseCore1 = 5;
           break;
         }

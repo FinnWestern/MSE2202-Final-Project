@@ -35,7 +35,7 @@ double dRightSpeed;
 const int winchA = 2;
 const int winchB = 23;
 
-#define winch1Channel 7
+#define winch1Channel 9
 #define winch2Channel 8
 
 void setupMotion (void)
