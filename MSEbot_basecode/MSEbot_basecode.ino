@@ -73,7 +73,7 @@ volatile uint32_t vui32test2;
 #include "Servo.h"
 
 #define motorStartIndex 0      //choose which step to start on
-#define ropeDistance 19.5      //distance from box to rope in cm
+#define ropeDistance 19.5      //distance from box to rope in cm____________________________________
 
 void loopWEBServerButtonresponce(void);
 
@@ -83,7 +83,7 @@ const int CR1_ciMotorPauseTime = 1000;
 const long CR1_clDebounceDelay = 50;
 const long CR1_clReadTimeout = 220;
 
-const uint8_t ci8RightTurn = 23;
+const uint8_t ci8RightTurn = 23;            //turn ticks_____________________________
 const uint8_t ci8LeftTurn = 26;
 
 unsigned char CR1_ucMainTimerCaseCore1;
@@ -134,7 +134,7 @@ unsigned long startServoTime = 0;
 
 boolean wiggle = false;
 boolean reachedWiggle = false;
-unsigned long noLatchTime = 6000;
+unsigned long noLatchTime = 6000;   //time to wait before backing up to grab rope_________________________
 unsigned long winchStartTime = 0;
 unsigned long hangTime = 3000;
 unsigned long startHang = 0;
@@ -453,7 +453,7 @@ void loop()
               }
             }
 
-            if(checkAscent){
+            if(checkAscent){                                                  // checks height when winching
               if(us_Distance > 60 && (millis() - startServoTime) >= servoTime){
                 checkAscent = false;
                 ENC_stopMotors();
