@@ -221,6 +221,12 @@ void loop()
           ucMotorState = 0;
           winchState = 0;
           move(0);
+          doorCheck = false;      //key to checking distance from door with ultrasonic
+          whiskerCheck = false;   //key to checking when robot makes contact with door with whisker switches
+          checkRopeCatch = false;
+          boxEdge = false;
+          checkAscent = false;
+          checkDescent = false;
         }
 
       }
