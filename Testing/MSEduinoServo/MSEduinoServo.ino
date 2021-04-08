@@ -12,8 +12,8 @@
 #define OUTPUT_ON                          // uncomment to turn on output debugging information
 
 const int potPin = 32;                       // select the analog pin used for the potentiometer
-const int servoPin = 2;                     // select the digital pin used for RC servo motor
-const int servoChannel = 5;                  // select the channel used for the RC servo motor
+const int servoPin = 15;                     // select the digital pin used for RC servo motor
+const int servoChannel = 6;                  // select the channel used for the RC servo motor
 
 int val;                                     // input value from the analog pin
 int servoPos;                                // desired servo angle

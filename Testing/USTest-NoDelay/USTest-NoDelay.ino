@@ -1,5 +1,5 @@
-#define echoPin 15 // attach pin D2 Arduino to pin Echo of HC-SR04
-#define trigPin 23 //attach pin D3 Arduino to pin Trig of HC-SR04
+#define echoPin 21 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin 22 //attach pin D3 Arduino to pin Trig of HC-SR04
 
 // defines variables
 long duration; // variable for the duration of sound wave travel in microseconds
