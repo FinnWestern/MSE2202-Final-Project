@@ -127,11 +127,11 @@ void IRAM_ATTR ENC_isrLeftA()
   //odometer reading
   if((digitalRead(ciEncoderLeftA) && digitalRead(ciEncoderLeftB)) || ((digitalRead(ciEncoderLeftA) == 0 && digitalRead(ciEncoderLeftB) == 0)))
   {
-    ENC_vi32LeftOdometer += 1;
+    ENC_vi32LeftOdometer -= 1;
   }
   else
   {
-    ENC_vi32LeftOdometer -= 1;
+    ENC_vi32LeftOdometer += 1;
   }
 
   
@@ -175,11 +175,11 @@ void IRAM_ATTR ENC_isrLeftB()
   //odometer reading
   if((digitalRead(ciEncoderLeftA) && digitalRead(ciEncoderLeftB)) || ((digitalRead(ciEncoderLeftA) == 0 && digitalRead(ciEncoderLeftB) == 0)))
   {
-    ENC_vi32LeftOdometer -= 1;
+    ENC_vi32LeftOdometer += 1;
   }
   else
   {
-    ENC_vi32LeftOdometer += 1;
+    ENC_vi32LeftOdometer -= 1;
   }
   if(ENC_btLeftMotorRunningFlag)
   {
