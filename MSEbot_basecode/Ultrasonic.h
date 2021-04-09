@@ -10,12 +10,12 @@ double us_Distance = 0; // variable for the distance measurement
 void finishPulse(){
   us_Duration = micros() - us_SendTime;
   us_Received = true;
-  us_Distance = ((double)us_Duration / 29 / 2) - 8.24; // Speed of sound wave divided by 2 (go and back)
+  us_Distance = ((double)us_Duration / 29 / 2) - 8.24;
 }
 
 void setupUltrasonic() {
-  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
-  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 }
 
 void getDistance() {

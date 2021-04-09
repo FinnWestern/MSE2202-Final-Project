@@ -503,15 +503,8 @@ void loop()
             //adjust speed to remain straight
             if (adjustSpeed) {
               bias = ENC_SpeedBias();
-              //Serial.print(bias);
-              //Serial.print(" Speed: ");
-              //Serial.print(CR1_ui8WheelSpeed);
               int_leftWheelSpeed = CR1_ui8WheelSpeed * bias; //average speeds
-              int_rightWheelSpeed = CR1_ui8WheelSpeed / bias;
-              //Serial.print(" Right before: ");
-              //Serial.print(CR1_ui8RightWheelSpeed);
-              //Serial.print(" Left before: ");
-              //Serial.print(CR1_ui8LeftWheelSpeed);
+              int_rightWheelSpeed = CR1_ui8WheelSpeed / bias; 
 
               if (int_rightWheelSpeed > 255) {
                 int_rightWheelSpeed = 255;
@@ -525,15 +518,10 @@ void loop()
               }
               CR1_ui8RightWheelSpeed = int_rightWheelSpeed;
               CR1_ui8LeftWheelSpeed = int_leftWheelSpeed;
-
-            } else {
+            }else {
               CR1_ui8LeftWheelSpeed = CR1_ui8WheelSpeed;
               CR1_ui8RightWheelSpeed = CR1_ui8WheelSpeed;
             }
-            //Serial.print(" Left: ");
-            //Serial.print(CR1_ui8LeftWheelSpeed);
-            //Serial.print(" Right: ");
-            //Serial.println(CR1_ui8RightWheelSpeed);
           }
 
           CR1_ucMainTimerCaseCore1 = 1;
