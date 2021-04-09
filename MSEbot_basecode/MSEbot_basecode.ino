@@ -484,7 +484,7 @@ void loop()
             }
             
             if (whiskerCheck) {
-              ENC_setDistance(50, 50);
+              ENC_SetDistance(50, 50);
               ucMotorState = 1;
               ucMotorStateIndex++;
               /*
