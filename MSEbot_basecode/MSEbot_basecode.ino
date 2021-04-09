@@ -484,10 +484,6 @@ void loop()
             }
             
             if (whiskerCheck) {
-              ENC_SetDistance(50, 50);
-              ucMotorState = 1;
-              ucMotorStateIndex++;
-              /*
               if (!digitalRead(rightSwitch) && !digitalRead(leftSwitch)) {
                 move(0);
                 ucMotorState = 0;
@@ -501,7 +497,6 @@ void loop()
               else if (!digitalRead(leftSwitch)) {
                 ucMotorState = 5;  //left pivot
               }
-              */
             }
 
 
