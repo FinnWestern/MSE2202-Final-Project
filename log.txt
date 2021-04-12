@@ -1,0 +1,249 @@
+* commit 2952df3dd019b401c9da8accf13514a9bb129db1
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Fri Apr 9 20:31:14 2021 -0300
+| 
+|     Cleaned up print statements
+| 
+* commit 269c8cf5c403511ddfa9ab03e8367876cc1db450
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Fri Apr 9 18:21:26 2021 -0300
+| 
+|     Added whisker check back
+| 
+* commit 9830ee4a47cb4397d58a8468b7668b7ae5c772bd
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 8 21:38:50 2021 -0300
+| 
+|     Fixed compilation errors
+| 
+* commit e96f9249ebdb3f5e5f434979b2f5f7937d5699ee
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 8 21:24:56 2021 -0300
+| 
+|     Removed whisker condition
+| 
+* commit fcff3de9cf40e7e6db5c0b570a438358c1aca8f0
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 8 20:21:55 2021 -0300
+| 
+|     Reset boolean values when stopping bot
+| 
+* commit 63d1bba72bc5e85dc58fa21d2f3c5f853e18695f
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 8 12:13:12 2021 -0300
+| 
+|     Create Whisker_Test.ino.ino
+| 
+* commit d178b005af0cc6ab128303cd12072c3bab8aee22
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 8 10:12:06 2021 -0300
+| 
+|     Modified testing programs to work with main code
+| 
+* commit 34602b1bd2ce259c4170a55de1da784cf68aed9f
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 8 10:08:41 2021 -0300
+| 
+|     Changed encoder counting
+| 
+* commit b6f75b74064b8bc1fa9b935315a1d26f6382f4ca
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Wed Apr 7 23:23:50 2021 -0300
+| 
+|     Added comments to changeable parts
+| 
+* commit e15f7d095bcc4c99f8a6e25c9b5f211fda03c317
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Wed Apr 7 10:59:13 2021 -0300
+| 
+|     Added descent
+| 
+* commit bbed2a317a34350d36094ad4c7d4621b4b7e8008
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 22:56:54 2021 -0300
+| 
+|     Goes 20cm back to latch string
+| 
+* commit eb4cddd9946b7ffad690024b67ee2d9d6f4787da
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 19:36:27 2021 -0300
+| 
+|     Added backup to help grab rope
+| 
+* commit 13245f4b76d5a9d67ab09428c1cf69b07b2ee87f
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 19:23:32 2021 -0300
+| 
+|     Minor tweaks
+|     
+|     - Left turn now 26
+|     - goes 3 times rope distance
+| 
+* commit e5d0a0c9247e2894361b6cbe51462f7c70fd6f9c
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 16:51:37 2021 -0300
+| 
+|     Starting condition tweaks
+| 
+* commit 111f799afb1026740d2fe33f3a8ac8bb2cecabc6
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 16:35:57 2021 -0300
+| 
+|     Winch climbing implemented
+| 
+* commit d696f854e4b71d7c647e5c28f827d51110e6d374
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 13:52:42 2021 -0300
+| 
+|     Driving tweaks
+| 
+* commit 1fd8497747afda227c7ccb6b3d2cead0f862221a
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Tue Apr 6 13:40:45 2021 -0300
+| 
+|     Robot traverses box and squares to door
+| 
+* commit 996161d32b70ae31f6af6267ab2daecec5865560
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Mon Apr 5 23:55:50 2021 -0300
+| 
+|     Updated main code
+|     
+|     - Whisker switches
+|     - Ultrasonic check door distance
+| 
+* commit 6bbd1b3ef9f1041fd30a0205efb1ac4e4a50df15
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Mon Apr 5 17:09:38 2021 -0300
+| 
+|     Added both switches
+|     
+|     Had to disable smart LED and limit switch
+| 
+* commit a3596867d1571c85eadbd8f0ad48b896f7492c10
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Mon Apr 5 15:34:57 2021 -0300
+| 
+|     Fixed Servo.h to work with basecode
+| 
+* commit f5130c59a863969db93c84c8576a3e6941afd7c3
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Mon Apr 5 15:18:11 2021 -0300
+| 
+|     Create Servo.h
+| 
+* commit ad8e8022899a8410063b773d4b5eeffcf0842856
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Mon Apr 5 15:08:32 2021 -0300
+| 
+|     Removed heartbeat LED
+| 
+* commit 6f025d250b4ef5e81c4f3b3ee51b140196bbd959
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Mon Apr 5 15:05:15 2021 -0300
+| 
+|     Create MSEduinoServo.ino
+| 
+* commit cc10e059423afaade831f22dfb3eceb79b70d2a3
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sun Apr 4 23:13:55 2021 -0300
+| 
+|     Update USTest-NoDelay.ino
+| 
+* commit a9027c241cbeebeff47f37fbae63064746ef6e1b
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sun Apr 4 23:12:15 2021 -0300
+| 
+|     Changed check distance time
+| 
+* commit eb38d27c6077565cdacfc5048ca3b70c789be540
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sun Apr 4 22:44:10 2021 -0300
+| 
+|     Integrated ultrasonic into main code
+| 
+* commit 8b317763e23ef3e28f768c1e2b6543e514e18be4
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sun Apr 4 21:10:52 2021 -0300
+| 
+|     Finished ultrasonic testing
+| 
+* commit 178a59efe557f6d0f437a8bd86b1d506bc2fbd52
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 18:29:39 2021 -0300
+| 
+|     Update USTest-NoDelay.ino
+| 
+* commit 37de2a7fe3bcbfec7c7548dd0c51b8fcb99221b4
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 17:29:09 2021 -0300
+| 
+|     Create USTest-NoDelay.ino
+| 
+* commit 9d7b14a4c2955ebbb62522848794caf1682af316
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 17:01:23 2021 -0300
+| 
+|     Removed step count
+| 
+* commit 8ac6fc367a5cc115f06931042b1dbe32a1d59856
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 16:25:48 2021 -0300
+| 
+|     Check distance in main
+| 
+* commit 957daf5fee22dbe40e06babd3fc8a436cb678343
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 15:57:06 2021 -0300
+| 
+|     Removed runStepper segment
+| 
+* commit e7e8d5d7f00b2cfed115118b12826bf2dbb63a4e
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 15:53:57 2021 -0300
+| 
+|     Removed stepper functionality
+| 
+* commit 071eb3b736205a266c01b7a2ca9b20de869bdfba
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 15:51:53 2021 -0300
+| 
+|     Implemented check distance function
+| 
+* commit abc009f808b4da1e295664c2003dd80b18343c01
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 12:07:47 2021 -0300
+| 
+|     Create Ultrasonic.h
+| 
+* commit b50821f46c029beac451d98f6075211315c1d62e
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 12:03:44 2021 -0300
+| 
+|     Set traverse order
+| 
+* commit 32bece43d8e895dac926c3fbfc957b5bac87049d
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 11:49:48 2021 -0300
+| 
+|     Remove seek/home beacon
+| 
+* commit 20a17d0e7d5ad38dc85a13238b1371a890c31fa7
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Sat Apr 3 11:47:23 2021 -0300
+| 
+|     Testing
+|     
+|     Testing sketches for individual components, and testing logs.
+| 
+* commit 2f25000c15bf30f4029eae2a61549f71c95e69ba
+| Author: FinnWestern <fhafting@uwo.ca>
+| Date:   Thu Apr 1 13:21:48 2021 -0300
+| 
+|     Adding base code
+| 
+* commit 9a63c9e7ffc3e08aa33555c1e6f12dde296449cb
+  Author: FinnWestern <78830107+FinnWestern@users.noreply.github.com>
+  Date:   Thu Apr 1 13:06:34 2021 -0300
+  
+      Initial commit
